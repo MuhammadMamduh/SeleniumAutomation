@@ -11,6 +11,8 @@ import org.testng.annotations.BeforeMethod;
 import pages.HomePage;
 import utils.CookieManager;
 
+import java.util.concurrent.TimeUnit;
+
 public class Base {
     private EventFiringWebDriver driver;
     protected HomePage homePage;
@@ -19,13 +21,18 @@ public class Base {
     public void setUp(){
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
         driver = new EventFiringWebDriver(new ChromeDriver(getChromeOptions()));
+
+        driver.manage().timeouts().pageLoadTimeout(1, TimeUnit.MINUTES);
+        driver.manage().timeouts().setScriptTimeout(30, TimeUnit.SECONDS);
+//        driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+
 //        driver.register(new EventReporter());
         goHome();
     }
 
     @BeforeMethod
     public void goHome(){
-        driver.get("https://the-internet.herokuapp.com/");
+        driver.get("https://develop.nasnav.com/fortune");
         homePage = new HomePage(driver);
     }
 
