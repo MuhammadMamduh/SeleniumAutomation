@@ -13,19 +13,19 @@ public class LoginPage {
     private By rememberMe_checkBox= By.cssSelector("input[name=\"remember\"]");
     private By forgotPassword_link= By.linkText("Forgot Password");
 
-    private By loginButton = By.cssSelector("button.btn.create-account");
+    private By login_btn = By.cssSelector("button.btn.create-account");
 
     public LoginPage(WebDriver driver){
         this.driver = driver;
     }
 
-    public void setEmail(String email)
+    public void enterEmail(String email)
     {
         System.out.println("Entering the Email");
         driver.findElement(email_txtField).sendKeys(email);
     }
 
-    public void setPassword(String password)
+    public void enterPassword(String password)
     {
         System.out.println("Entering the Password");
         driver.findElement(password_txtField).sendKeys(password);
@@ -34,8 +34,9 @@ public class LoginPage {
     public HomePage clickLogin()
     {
         System.out.println("Logging in");
-        driver.findElement(loginButton).click();
+        driver.findElement(login_btn).click();
 
         return new HomePage(driver);
     }
+
 }
