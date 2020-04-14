@@ -1,88 +1,56 @@
 package pages;
 
-import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
 
-public class HomePage
+public class HomePage extends PagesBase
 {
     // ________________________________________ [ Instance Variables ] _________________________________________________
-    private WebDriver driver;
-
     // Instance Variables that are ONLY visible BEFORE Logging in
-    private By interfacingLogin_btn= By.xpath("//*[@id=\"root\"]/div[2]/div[3]/div[2]/div[3]/div/div[2]/button");
+    @FindBy(xpath = "//*[@id=\"root\"]/div[2]/div[3]/div[2]/div[3]/div/div[2]/button")
+    private WebElement login_btn;
 
     // Instance Variables that are ONLY visible AFTER Logging in
-    private By account_btn= By.cssSelector("button.btn.account-btn");
-    private By logout_btn= By.cssSelector("div.logged-in-menu :nth-child(3)");
+    @FindBy(css = "button.btn.account-btn")
+    private WebElement account_btn;
+
+    @FindBy(css = "div.logged-in-menu :nth-child(3)")
+    private WebElement logout_btn;
 
     // Common Before & After Logging in
-    private By logo= By.xpath("//img[@class=\"logo\"]");
-    private By mainSlidingBanner= By.xpath("//div[@class=\"d-flex flex-wrap banner\"]");
+    @FindBy(xpath = "//img[@class=\"logo\"]")
+    private WebElement logo;
+
+    @FindBy(xpath = "//div[@class=\"d-flex flex-wrap banner\"]")
+    private WebElement mainSlidingBanner;
     // _________________________________________________________________________________________________________________
 
     // ___________________________________________ [ Constructor ] _____________________________________________________
     public HomePage(WebDriver driver)
     {
-        this.driver= driver;
+        super(driver);
+        jse = (JavascriptExecutor) driver;
+        action = new Actions(driver);
     }
     // _________________________________________________________________________________________________________________
 
-    // ____________________________________________ [ Getter(s) ] ______________________________________________________
-    public WebElement getInterfacingLogin_btn()
-    {
-        return driver.findElement(interfacingLogin_btn);
-    }
-    public WebElement getAccount_btn()
-    {
-        return driver.findElement(account_btn);
-    }
-    public WebElement getLogout_btn()
-    {
-        return driver.findElement(logout_btn);
-    }
-    // _________________________________________________________________________________________________________________
-
-    // _______________________________________________ [ Core ] ________________________________________________________
+    // _____________________________________________ [ Functions ] _____________________________________________________
+    // Actions
     public LoginPage clickGoToLoginPage() throws InterruptedException
     {
-        // Explicit Wait
-        WebDriverWait wait= new WebDriverWait(driver, 15);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(logo));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(mainSlidingBanner));
-
-        Thread.sleep(2000);
-
-        System.out.println("Clicking to go to the Login page");
-        getInterfacingLogin_btn().click();
+        clickButton(login_btn);
 
         return new LoginPage(driver);
     }
 
     public HomePage clickGoToLogout() throws InterruptedException
     {
-        // Explicit Wait
-        WebDriverWait wait= new WebDriverWait(driver, 15);
-        wait.until(ExpectedConditions.visibilityOfElementLocated(logo));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(account_btn));
-
-        Thread.sleep(2000);
-
-        System.out.println(getAccount_btn().getText());
-        getAccount_btn().click();
-
         return new HomePage(driver);
     }
 
-    public HomePage clickLogout() throws InterruptedException
-    {
-        getLogout_btn().click();
-        System.out.println(getInterfacingLogin_btn().getText());
-
-        return new HomePage(driver);
-    }
 //    private void clickLink(String linkText)
 //    {
 //        driver.findElement(By.linkText(linkText)).click();

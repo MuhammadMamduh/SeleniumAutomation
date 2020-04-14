@@ -1,42 +1,59 @@
 package pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
-public class LoginPage {
+public class LoginPage extends PagesBase {
+    // ________________________________________ [ Instance Variables ] _________________________________________________
+    //
+    @FindBy(xpath = "//input[@type=\"email\" and @name=\"email\" and @class=\"form-control\" and @placeholder=\"E-mail\"]")
+    private WebElement email_txtField;
 
-    private WebDriver driver;
+    @FindBy(xpath = "//input[@type=\"password\" and @name=\"password\" and @class=\"form-control\"]")
+    private WebElement password_txtField;
 
-    private By email_txtField= By.xpath("//input[@type=\"email\" and @name=\"email\" and @class=\"form-control\" and @placeholder=\"E-mail\"]");
-    private By password_txtField= By.xpath("//input[@type=\"password\" and @name=\"password\" and @class=\"form-control\"]");
+    //
+    @FindBy(css = "input[name=\"remember\"]")
+    private WebElement rememberMe_checkBox;
 
-    private By rememberMe_checkBox= By.cssSelector("input[name=\"remember\"]");
-    private By forgotPassword_link= By.linkText("Forgot Password");
+    @FindBy(linkText = "Forgot Password")
+    private WebElement forgotPassword_link;
 
-    private By login_btn = By.cssSelector("button.btn.create-account");
+    //
+    @FindBy(css = "button.btn.create-account")
+    private WebElement login_btn;
+    // _________________________________________________________________________________________________________________
 
+    // ___________________________________________ [ Constructor ] _____________________________________________________
     public LoginPage(WebDriver driver){
-        this.driver = driver;
+        super(driver);
     }
+    // _________________________________________________________________________________________________________________
 
+    // _______________________________________________ [ Core ] ________________________________________________________
+    // Steps
     public void enterEmail(String email)
     {
         System.out.println("Entering the Email");
-        driver.findElement(email_txtField).sendKeys(email);
+        sendText(email_txtField, email);
     }
-
     public void enterPassword(String password)
     {
         System.out.println("Entering the Password");
-        driver.findElement(password_txtField).sendKeys(password);
+        sendText(password_txtField, password);
     }
-
     public HomePage clickLogin()
     {
         System.out.println("Logging in");
-        driver.findElement(login_btn).click();
+        clickButton(login_btn);
 
         return new HomePage(driver);
     }
-
+    // Actions
+    public void login(String email, String password){
+        sendText(email_txtField, email);
+        sendText(password_txtField, password);
+        clickButton(login_btn);
+    }
 }

@@ -1,14 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Suite">
-  <test thread-count="5" name="Test">
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="Regression Suite">
+  <parameter name="browser" value="chrome" />
+  <test name="Regression Test" preserve-order="false">
     <classes>
-      <class name="login.LoginTests">
-        <methods>
-          <include name="testSuccessfulLogin" />
-          <include name="logout" />
-        </methods>
-      </class>
+      <class name="tests.Login_Tests" />
+<!--      <class name="tests." />-->
+<!--      <class name="tests." />-->
+<!--      <class name="tests." />-->
+<!--      <class name="tests." />-->
+<!--      <class name="tests." />-->
+<!--      <class name="tests." />-->
+<!--      <class name="tests." />-->
+<!--      <class name="tests." />-->
+<!--      <class name="tests." />-->
+<!--      <class name="tests." />-->
+<!--      <class name="tests." />-->
+<!--      <class name="tests." />-->
+<!--      <class name="tests." />-->
     </classes>
-  </test> <!-- Test -->
-</suite> <!-- Suite -->
+  </test>
+</suite>
