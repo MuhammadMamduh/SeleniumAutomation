@@ -36,18 +36,20 @@ public class PagesBase
 
     // ____________________________________________ [ Functions ] ______________________________________________________
     // Common Functions
-    protected static void clickButton(WebElement button)
+    protected  WebElement clickButton(WebElement button)
     {
         button.click();
 
-//        return button;
+        return button;
     }
 
-    protected static void sendText(WebElement textElement , String value)
+    protected  WebElement sendText(WebElement textElement , String value)
     {
+//        WebDriverWait wait = new WebDriverWait(driver,30);
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(textElement.getAttribute("xpath"))));
         textElement.sendKeys(value);
 
-//        return textElement;
+        return textElement;
     }
     public WebElement clearText(WebElement element)
     {

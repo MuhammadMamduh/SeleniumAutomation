@@ -1,6 +1,5 @@
 package tests;
 
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -8,6 +7,7 @@ import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.safari.SafariDriver;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.testng.ITestResult;
 import org.testng.annotations.*;
 import utilities.Helper;
@@ -21,7 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class TestsBase
 {
     // ________________________________________ [ Instance Variables ] _________________________________________________
-    public static WebDriver driver ;
+    protected EventFiringWebDriver driver;
     public static String downloadPath = System.getProperty("user.dir") + "\\Downloads";
     protected FileInputStream fis;
     protected Properties properties;
@@ -56,25 +56,25 @@ public class TestsBase
         if (browserName.equalsIgnoreCase("chrome"))
         {
             System.setProperty("webdriver.chrome.driver", System.getProperty("user.dir")+"/Drivers/chromedriver.exe");
-            driver = new ChromeDriver(chromeOption());
+            driver = new EventFiringWebDriver(new ChromeDriver(chromeOption()));
         }
         else if(browserName.equalsIgnoreCase("firefox"))
         {
             System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir")+"/Drivers/geckodriver.exe");
-            driver = new FirefoxDriver(firefoxOption());
+            driver = new EventFiringWebDriver(new FirefoxDriver(firefoxOption()));
         }
         else if (browserName.equalsIgnoreCase("ie")) //TODO
         {
             System.setProperty("webdriver.ie.driver", System.getProperty("user.dir")+"/Drivers/absent.exe");
-            driver = new InternetExplorerDriver();
+            driver = new EventFiringWebDriver(new InternetExplorerDriver());
         }
         else if (browserName.equalsIgnoreCase("safari")) //TODO
         {
             System.setProperty("webdriver.safari.driver", System.getProperty("user.dir")+"/Drivers/absent.exe");
-            driver = new SafariDriver();
+            driver = new EventFiringWebDriver(new SafariDriver());
         }
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(120, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(180, TimeUnit.SECONDS);
 
 
         driver.navigate().to("https://develop.nasnav.org/fortune");
