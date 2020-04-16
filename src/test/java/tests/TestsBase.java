@@ -24,9 +24,9 @@ public class TestsBase
     protected EventFiringWebDriver driver;
     public static String downloadPath = System.getProperty("user.dir") + "\\Downloads";
     protected FileInputStream fis;
-    protected Properties properties;
+    protected static Properties properties;
 
-    // ________________________________________ [ Instance Variables ] _________________________________________________
+    // ______________________________________ [ Browser Configurations ] _______________________________________________
     public static FirefoxOptions firefoxOption()
     {
         FirefoxOptions option = new FirefoxOptions();
@@ -63,18 +63,18 @@ public class TestsBase
             System.setProperty("webdriver.gecko.driver", System.getProperty("user.dir")+"/Drivers/geckodriver.exe");
             driver = new EventFiringWebDriver(new FirefoxDriver(firefoxOption()));
         }
-        else if (browserName.equalsIgnoreCase("ie")) //TODO
+        else if (browserName.equalsIgnoreCase("ie")) //TODO: Get the driver.
         {
             System.setProperty("webdriver.ie.driver", System.getProperty("user.dir")+"/Drivers/absent.exe");
             driver = new EventFiringWebDriver(new InternetExplorerDriver());
         }
-        else if (browserName.equalsIgnoreCase("safari")) //TODO
+        else if (browserName.equalsIgnoreCase("safari")) //TODO: Get the driver.
         {
             System.setProperty("webdriver.safari.driver", System.getProperty("user.dir")+"/Drivers/absent.exe");
             driver = new EventFiringWebDriver(new SafariDriver());
         }
         driver.manage().window().maximize();
-        driver.manage().timeouts().implicitlyWait(180, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
 
 
         driver.navigate().to("https://develop.nasnav.org/fortune");
@@ -96,6 +96,24 @@ public class TestsBase
             System.out.println("Taking Screenshot....");
             Helper.captureScreenshot(driver, result.getName());
         }
+    }
+
+    public Properties loadDataRepoFile()
+    {
+        properties= new Properties();
+        try {
+            fis= new FileInputStream(System.getProperty("user.dir")+"\\src\\main\\resources\\credentials.properties");
+            properties.load(fis);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return properties;
+    }
+
+    public String getDataByKey(String key)
+    {
+        return properties.getProperty(key);
     }
 
     public CookieManager getCookieManager(){

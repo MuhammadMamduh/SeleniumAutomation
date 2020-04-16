@@ -7,13 +7,24 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
+import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.FileInputStream;
 import java.util.Properties;
+import java.util.logging.Logger;
 
+// TODO: Validate the popups.
+// TODO: Registration.
+// TODO: Searching.
+// TODO: Logging
+// TODO:
+// TODO:
+// TODO:
+// TODO:
 public class PagesBase
 {
     // ________________________________________ [ Instance Variables ] _________________________________________________
-    protected WebDriver driver;
+//    public WebDriver driver; // TODO: Understand why this corrupted the design & caused a [NullPointerException]
 
     protected FileInputStream fis;
     protected Properties properties;
@@ -36,26 +47,38 @@ public class PagesBase
 
     // ____________________________________________ [ Functions ] ______________________________________________________
     // Common Functions
-    protected  WebElement clickButton(WebElement button)
+    public static WebElement clickButton(WebElement button)
     {
         button.click();
+        Logger.getLogger("Clicking on Button: ");
 
         return button;
     }
 
-    protected  WebElement sendText(WebElement textElement , String value)
+    public static WebElement sendText(WebElement textElement , String value)
     {
-//        WebDriverWait wait = new WebDriverWait(driver,30);
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(textElement.getAttribute("xpath"))));
         textElement.sendKeys(value);
+        Logger.getLogger("Writing in Textfield: ");
 
         return textElement;
     }
-    public WebElement clearText(WebElement element)
+    public static WebElement clearText(WebElement element)
     {
         element.clear();
+        Logger.getLogger("Clearing Textfield: ");
 
         return element;
+    }
+    public static void clickEnter()
+    {
+        Robot robot= null;
+        try {
+            robot = new Robot();
+        } catch (AWTException e) {
+            e.printStackTrace();
+        }
+        robot.keyPress(KeyEvent.VK_ENTER);
+        Logger.getLogger("Clicking ENTER");
     }
     public void scrollToBottom()
     {
