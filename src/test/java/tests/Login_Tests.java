@@ -1,5 +1,7 @@
 package tests;
 
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -13,6 +15,7 @@ import java.io.IOException;
 public class Login_Tests extends TestsBase
 {
     HomePage homePage;
+    LoginPage loginPage;
     // _________________________________________________________________________________________________________________
     // _________________________________________________________________________________________________________________
 
@@ -33,21 +36,33 @@ public class Login_Tests extends TestsBase
     public void login_positive_Test(String email, String password, boolean flag) throws InterruptedException, IOException
     {
         homePage = new HomePage(driver);
+        wait = new WebDriverWait(driver, 9);
 
-        Thread.sleep(2000);
+        wait.until(ExpectedConditions.visibilityOf(homePage.loginAndAccount_btn)); // Assure Page Load ▌ [Home] Page ▌ Chosen Flag-> [homePage.loginAndAccount_btn]
         LoginPage loginPage = homePage.goToLoginPage();
+
+        wait.until(ExpectedConditions.visibilityOf(loginPage.email_txtField)); // Assure Page Load ▌ [Login] Page ▌ Chosen Flag-> [loginPage.email_txtField]
         loginPage.login(email, password);
 
-        Thread.sleep(1000);
-        Assert.assertEquals(driver.getCurrentUrl(), "https://develop.nasnav.org/fortune");
+        // Assertions*3
+        wait.until(ExpectedConditions.visibilityOf(homePage.alert)); // Assure Page Load | [Home] Page
+        Assert.assertEquals(homePage.alert.getText(), "Welcome to Fortune");
+        homePage.closeAlert_btn.click();
+
         Assert.assertEquals(homePage.loginAndAccount_btn.getText(), "Account");
 
-        // This step is just to pave the way to restart the test with different data.
+        Assert.assertEquals(driver.getCurrentUrl(), "https://develop.nasnav.org/fortune");
+        wait.until(ExpectedConditions.invisibilityOf(homePage.alert));
+
+        // Rolling back to checkpoint.
         homePage.logout();
+        wait.until(ExpectedConditions.visibilityOf(homePage.alert));
+        Assert.assertEquals(homePage.alert.getText(), "You've been logged out successfully");
+        homePage.closeAlert_btn.click();
     }
     // _________________________________________________________________________________________________________________
 
-    @DataProvider
+    @DataProvider(name = "loginData_negative")
     public Object[][] loginData_negative()
     {
         properties = loadDataRepoFile();
@@ -63,15 +78,29 @@ public class Login_Tests extends TestsBase
     public void login_negative_Test(String email, String password, boolean flag) throws InterruptedException, IOException
     {
         homePage = new HomePage(driver);
+        loginPage = new LoginPage(driver);
 
-        Thread.sleep(2000);
-        LoginPage loginPage = homePage.goToLoginPage();
+        wait = new WebDriverWait(driver, 9);
+
+        if(driver.getCurrentUrl().equals("https://develop.nasnav.org/fortune"))
+        {
+            wait.until(ExpectedConditions.visibilityOf(homePage.loginAndAccount_btn)); // Assure Page Load ▌ [Home] Page ▌ Chosen Flag-> [homePage.loginAndAccount_btn]
+            LoginPage loginPage = homePage.goToLoginPage();
+            wait.until(ExpectedConditions.visibilityOf(loginPage.email_txtField)); // Assure Page Load ▌ [Login] Page ▌ Chosen Flag-> [loginPage.email_txtField]
+        }
+
         loginPage.login(email, password);
+
+        // Assertions*3
+        wait.until(ExpectedConditions.visibilityOf(loginPage.alert));
+        loginPage.hoverOnElement(loginPage.alert, driver);
+        Assert.assertEquals(loginPage.alert.getText(), "Email or password is incorrect");
+        loginPage.closeAlert_btn.click();
 
         Assert.assertEquals(driver.getCurrentUrl(), "https://develop.nasnav.org/fortune/login");
         Assert.assertEquals(homePage.loginAndAccount_btn.getText(), "LOGIN");
 
-        // These steps is just to pave the way to restart the test with different data.
+        // Rolling back to checkpoint.
         PagesBase.clearText(loginPage.email_txtField);
         PagesBase.clearText(loginPage.password_txtField);
     }

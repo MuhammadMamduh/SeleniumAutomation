@@ -3,7 +3,6 @@ package pages;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -32,6 +31,8 @@ public class HomePage extends PagesBase
 
     @FindBy(xpath = "//*[@id=\"root\"]/div[2]/div[3]/div[2]/div[3]/div/div[1]/form/input[1]")
     public WebElement searchBox;
+
+
     // _________________________________________________________________________________________________________________
 
     // ___________________________________________ [ Constructor ] _____________________________________________________
@@ -42,7 +43,7 @@ public class HomePage extends PagesBase
 
         PageFactory.initElements(driver, this);
         jse = (JavascriptExecutor) driver;
-        action = new Actions(driver);
+//        action = new Actions(driver);
     }
     // _________________________________________________________________________________________________________________
 
@@ -50,15 +51,15 @@ public class HomePage extends PagesBase
     // Actions
     public LoginPage goToLoginPage()
     {
-        clickButton(loginAndAccount_btn);
+        click(loginAndAccount_btn);
 
         return new LoginPage(driver);
     }
 
     public void logout()
     {
-        clickButton(account_btn);
-        clickButton(logout_btn);
+        click(account_btn);
+        click(logout_btn);
     }
 
     public void search(String searchToken)

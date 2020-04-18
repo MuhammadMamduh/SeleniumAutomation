@@ -1,22 +1,27 @@
 package pages;
 
+
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.FileInputStream;
+import java.util.List;
 import java.util.Properties;
-import java.util.logging.Logger;
 
 // TODO: Validate the popups.
+// _____________________________________________________________________________________________________________________
+// TODO: Logging | Yet using printing
+// _____________________________________________________________________________________________________________________
 // TODO: Registration.
 // TODO: Searching.
-// TODO: Logging
 // TODO:
 // TODO:
 // TODO:
@@ -24,7 +29,7 @@ import java.util.logging.Logger;
 public class PagesBase
 {
     // ________________________________________ [ Instance Variables ] _________________________________________________
-//    public WebDriver driver; // TODO: Understand why this corrupted the design & caused a [NullPointerException]
+    public WebDriver driver; // TODO: Understand why this corrupted the design & caused a [NullPointerException]
 
     protected FileInputStream fis;
     protected Properties properties;
@@ -32,8 +37,19 @@ public class PagesBase
     public JavascriptExecutor jse ;
     public Select select ;
     public Actions action ;
+    public WebDriverWait wait;
 
     protected HomePage homePage;
+
+    @FindBy(css = "div.Toastify__toast-container Toastify__toast-container--top-center")
+    public List<WebElement> alerts_list;
+
+    @FindBy(css = "div.Toastify__toast-body")
+    public WebElement alert;
+
+    @FindBy(css = "div.Toastify__toast-body + button")
+    public WebElement closeAlert_btn;
+
     // _________________________________________________________________________________________________________________
 
 
@@ -47,25 +63,29 @@ public class PagesBase
 
     // ____________________________________________ [ Functions ] ______________________________________________________
     // Common Functions
-    public static WebElement clickButton(WebElement button)
+    public static WebElement click(WebElement button)
     {
         button.click();
-        Logger.getLogger("Clicking on Button: ");
 
         return button;
     }
+    public WebElement hoverOnElement(WebElement element, WebDriver driver)
+    {
+        action = new Actions(driver);
 
+        action.moveToElement(element).build().perform();
+
+        return element;
+    }
     public static WebElement sendText(WebElement textElement , String value)
     {
         textElement.sendKeys(value);
-        Logger.getLogger("Writing in Textfield: ");
 
         return textElement;
     }
     public static WebElement clearText(WebElement element)
     {
         element.clear();
-        Logger.getLogger("Clearing Textfield: ");
 
         return element;
     }
@@ -78,7 +98,6 @@ public class PagesBase
             e.printStackTrace();
         }
         robot.keyPress(KeyEvent.VK_ENTER);
-        Logger.getLogger("Clicking ENTER");
     }
     public void scrollToBottom()
     {
