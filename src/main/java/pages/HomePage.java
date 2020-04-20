@@ -10,7 +10,7 @@ public class HomePage extends PagesBase
 {
     private WebDriver driver;
 
-    // ________________________________________ [ Instance Variables ] _________________________________________________
+    // __________________________________________ [ Page Elements ] ____________________________________________________
     // Instance Variables that are ONLY visible BEFORE Logging in
     @FindBy(className = "login-button-large")
     public WebElement loginAndAccount_btn;

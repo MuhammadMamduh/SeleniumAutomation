@@ -8,7 +8,8 @@ import org.openqa.selenium.support.PageFactory;
 public class RecoverPasswordPage extends PagesBase
 {
     private WebDriver driver;
-    // ________________________________________ [ Instance Variables ] _________________________________________________
+
+    // __________________________________________ [ Page Elements ] ____________________________________________________
     // Password doesn't match confirmed password
     // Your password has been set successfully
     @FindBy(css = "input[name=\"password\"]")

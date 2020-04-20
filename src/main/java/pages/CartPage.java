@@ -5,33 +5,38 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class LoginPage extends PagesBase
+import java.util.List;
+
+public class CartPage extends PagesBase
 {
     private WebDriver driver;
-
     // __________________________________________ [ Page Elements ] ____________________________________________________
     //
-    @FindBy(css = "input[name='email'][type='email']")
-    public WebElement email_txtField;
+    @FindBy( css = "div[class='row cart-content']")
+    List<WebElement> productsInCart_list;
 
-    @FindBy(css = "input[name='password'][type='password']")
-    public WebElement password_txtField;
+    @FindBy( css = "product-> div[class='row cart-content'] > div:nth-child(2) div[class='info'] >a")
+    List<WebElement> productsNamesInCart_list;
 
-    @FindBy(css = "input[name=\"remember\"]")
-    public WebElement rememberMe_checkBox;
+    @FindBy( css = "price-> div[class='row cart-content'] > div:nth-child(2) div[class='info'] h6.price")
+    List<WebElement> productsPricesInCart_list;
 
-    @FindBy(linkText = "Forgot Password?")
-    public WebElement forgotPassword_link;
+    @FindBy( css = "div.subtotal p")
+    WebElement subTotal_field;
 
-    @FindBy(css = "button.sallab-submit-button")
-    public WebElement login_btn;
+    @FindBy( css = "div.shipping p")
+    WebElement shipping_field;
 
-    @FindBy(linkText = "Create an account")
-    public WebElement registrationPage_link;
+    @FindBy( css = "div.total-price p")
+    WebElement total_field;
+
+    @FindBy( css = "button[class='btn checkout']")
+    WebElement checkout_btn;
     // _________________________________________________________________________________________________________________
 
     // ___________________________________________ [ Constructor ] _____________________________________________________
-    public LoginPage(WebDriver driver){
+    public CartPage(WebDriver driver)
+    {
         super(driver);
         this.driver = driver;
 
@@ -41,17 +46,9 @@ public class LoginPage extends PagesBase
 
     // ____________________________________________ [ Functions ] ______________________________________________________
     // Actions
-    public void login(String email, String password)
-    {
-        sendText(email_txtField, email);
-        sendText(password_txtField, password);
-        click(login_btn);
-    }
 
-    public RegistrationPage goToRegistrationPage()
+    public void calculateTheTotal()
     {
-        click(registrationPage_link);
 
-        return new RegistrationPage(driver);
     }
 }

@@ -40,7 +40,7 @@ public class Registration_Tests extends TestsBase
         wait.until(ExpectedConditions.visibilityOf(registrationPage.name_txtField)); // Assure Page Load ▌ [Registeration] Page ▌ Chosen Flag-> [registerationPage.name_txtField]
         registrationPage.registerWithEmail(newEmail, "anyName", true);
         wait.until(ExpectedConditions.visibilityOf(homePage.alert));
-        Assert.assertEquals(homePage.alert.getText(), "Your account has been created successfully");
+        Assert.assertEquals(homePage.alert.getText(), "Your account has been created successfully, check your mail.");
         wait.until(ExpectedConditions.invisibilityOf(homePage.alert));
 //        registrationPage.closeAlert_btn.click();
 

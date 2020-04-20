@@ -8,19 +8,20 @@ import org.openqa.selenium.support.PageFactory;
 public class RegistrationPage extends PagesBase
 {
     private WebDriver driver;
-    // ________________________________________ [ Instance Variables ] _________________________________________________
+
+    // __________________________________________ [ Page Elements ] ____________________________________________________
     //
-    @FindBy(css = "input[type=\"email\"][name=\"email\"]")
+    @FindBy(css = "input[type=\"email\"][name=\"Email\"]")
     public WebElement email_txtField;
 
     @FindBy(css = "input[type=\"text\"][name=\"name\"]")
     public WebElement name_txtField;
 
-    @FindBy(id = "autoSizingCheck")
-    public WebElement terms_checkBox;
+    // @FindBy(id = "autoSizingCheck")
+    // public WebElement terms_checkBox;
 
-    @FindBy(css = "button.create-account")
-    public WebElement createAccount_btn;
+    @FindBy(css = "button.sallab-submit-button")
+    public WebElement signUp_btn;
 
     @FindBy(css = "button.fb-button")
     public WebElement continueWithFB_btn;
@@ -46,11 +47,11 @@ public class RegistrationPage extends PagesBase
     {
         sendText(email_txtField, email);
         sendText(name_txtField, name);
-        if(acceptTerms_flag==true)
-        {
-            click(terms_checkBox);
-        }
-        click(createAccount_btn);
+        // if(acceptTerms_flag==true)
+        // {
+        //     click(terms_checkBox);
+        // }
+        click(signUp_btn);
     }
     public void registerWithFB()
     {
