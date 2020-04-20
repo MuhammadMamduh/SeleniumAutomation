@@ -47,7 +47,7 @@ public class Login_Tests extends TestsBase
         // Assertions*3
         wait.until(ExpectedConditions.visibilityOf(homePage.alert)); // Assure Page Load | [Home] Page
         Assert.assertEquals(homePage.alert.getText(), "Welcome to Fortune");
-        homePage.closeAlert_btn.click();
+        wait.until(ExpectedConditions.invisibilityOf(homePage.alert));
 
         Assert.assertEquals(homePage.loginAndAccount_btn.getText(), "Account");
 
