@@ -17,6 +17,11 @@ public class RegistrationPage extends PagesBase
     @FindBy(css = "input[type=\"text\"][name=\"name\"]")
     public WebElement name_txtField;
 
+    @FindBy(css = "input[type=\"password\"][name=\"Password\"]")
+    public WebElement password_txtField;
+
+    @FindBy(css = "input[type=\"password\"][name=\"confirmPassword\"]")
+    public WebElement passwordConfirmation_txtField;
     // @FindBy(id = "autoSizingCheck")
     // public WebElement terms_checkBox;
 
@@ -43,10 +48,13 @@ public class RegistrationPage extends PagesBase
     // _________________________________________________________________________________________________________________
 
     // ____________________________________________ [ Functions ] ______________________________________________________
-    public void registerWithEmail(String email, String name, boolean acceptTerms_flag)
+    public void registerWithEmail(String email, String name, String password, String passwordConfirmation, boolean acceptTerms_flag)
     {
         sendText(email_txtField, email);
         sendText(name_txtField, name);
+        sendText(password_txtField, password);
+        sendText(passwordConfirmation_txtField, passwordConfirmation);
+
         // if(acceptTerms_flag==true)
         // {
         //     click(terms_checkBox);

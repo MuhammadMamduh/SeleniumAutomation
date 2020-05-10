@@ -1,10 +1,13 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import java.util.List;
 
 public class HomePage extends PagesBase
 {
@@ -29,9 +32,32 @@ public class HomePage extends PagesBase
     @FindBy(xpath = "//div[@class=\"d-flex flex-wrap banner\"]")
     public WebElement mainSlidingBanner;
 
-    @FindBy(xpath = "//*[@id=\"root\"]/div[2]/div[3]/div[2]/div[3]/div/div[1]/form/input[1]")
+    @FindBy(css = "input[type=\"search\"]")
     public WebElement searchBox;
 
+    @FindBy(css = "span.searchButton")
+    public WebElement search_btn;
+
+    @FindBy(css = "div.Navigation_navButtons__2syKV button")
+    public List<WebElement> navBarElements_list;
+
+    @FindBy(css = "div.Navigation_navButtons__2syKV :nth-child(1)")
+    public WebElement fragrances_navBarElement;
+
+    @FindBy(css = "div.Column_Column__2fQ1B a")
+    public List<WebElement> fragrancesCategories_list;
+
+    @FindBy(css = "div.Navigation_navButtons__2syKV :nth-child(2)")
+    public WebElement makeUp_navBarElement;
+
+    @FindBy(css = "div.Navigation_navButtons__2syKV :nth-child(4)")
+    public WebElement skinCare_navBarElement;
+
+    @FindBy(css = "div.Navigation_navButtons__2syKV :nth-child(5)")
+    public WebElement newArrivals_navBarElement;
+
+    @FindBy(css = "div.Navigation_navButtons__2syKV :nth-child(6)")
+    public WebElement bestSellers_navBarElement;
 
     // _________________________________________________________________________________________________________________
 
@@ -62,10 +88,22 @@ public class HomePage extends PagesBase
         click(logout_btn);
     }
 
-    public void search(String searchToken)
+    public SearchResultsPage search(String searchToken)
     {
         clearText(searchBox);
         sendText(searchBox, searchToken);
-        clickEnter();
+        click(search_btn);
+        // clickEnter();
+
+        return (new SearchResultsPage(driver));
+    }
+
+    public void navigateMainProductsCategories(WebElement mainCategoryElement, String subCategoryElementLinkText) throws InterruptedException
+    {
+        // int randomElementIndex = getRandomIndexFromZeroBasedDs(navBarElements_list.size());
+        // hoverOnElement(mainCategoryElement, driver);
+        click(mainCategoryElement);
+        Thread.sleep(3000);
+        click(driver.findElement(By.linkText(subCategoryElementLinkText)));
     }
 }

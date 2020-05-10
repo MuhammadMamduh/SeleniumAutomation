@@ -13,26 +13,14 @@ public class SearchResultsPage extends PagesBase
 
     // __________________________________________ [ Page Elements ] ____________________________________________________
     //
-    @FindBy( css = "div[class='row cart-content']")
-    List<WebElement> productsInCart_list;
+    @FindBy (css = "div.grid-data")
+    public List<WebElement> resultingProductsBulk_list;
 
-    @FindBy( css = "product-> div[class='row cart-content'] > div:nth-child(2) div[class='info'] >a")
-    List<WebElement> productsNamesInCart_list;
+    @FindBy (css = "div.grid-data > a")
+    public List<WebElement> resultingProductsLink_list;
 
-    @FindBy( css = "price-> div[class='row cart-content'] > div:nth-child(2) div[class='info'] h6.price")
-    List<WebElement> productsPricesInCart_list;
+    String shopNowBtnCss_query = "a";
 
-    @FindBy( css = "div.subtotal p")
-    WebElement subTotal_field;
-
-    @FindBy( css = "div.shipping p")
-    WebElement shipping_field;
-
-    @FindBy( css = "div.total-price p")
-    WebElement total_field;
-
-    @FindBy( css = "button[class='btn checkout']")
-    WebElement checkout_btn;
     // _________________________________________________________________________________________________________________
 
     // ___________________________________________ [ Constructor ] _____________________________________________________
@@ -46,4 +34,22 @@ public class SearchResultsPage extends PagesBase
 
     // ____________________________________________ [ Functions ] ______________________________________________________
     // Actions
+    public ProductPage chooseRandomProduct()
+    {
+        int randomProductIndex = getRandomIndexFromZeroBasedDs(resultingProductsBulk_list.size());
+        
+        try
+        {
+            WebElement randomProduct = resultingProductsLink_list.get(randomProductIndex);
+        
+            click(randomProduct);
+        }
+        catch(ArrayIndexOutOfBoundsException e)
+        {
+            e.printStackTrace();
+            System.out.println(e.getLocalizedMessage());
+        }
+        
+        return (new ProductPage(driver));
+    }
 }

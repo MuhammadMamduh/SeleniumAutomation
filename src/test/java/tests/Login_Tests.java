@@ -47,8 +47,8 @@ public class Login_Tests extends TestsBase
         // Assertions*3
         wait.until(ExpectedConditions.visibilityOf(homePage.alert)); // Assure Page Load | [Home] Page
         Assert.assertEquals(homePage.alert.getText(), "Welcome to Fortune");
-        wait.until(ExpectedConditions.invisibilityOf(homePage.alert));
 
+        wait.until(ExpectedConditions.invisibilityOf(homePage.alert));
         Assert.assertEquals(homePage.loginAndAccount_btn.getText(), "Account");
 
         Assert.assertEquals(driver.getCurrentUrl(), "https://develop.nasnav.org/fortune");
@@ -67,19 +67,22 @@ public class Login_Tests extends TestsBase
     {
         properties = loadDataRepoFile();
 
-        Object[][] credentialsData= new Object[2][3];
+        Object[][] credentialsData= new Object[2][2];
 
-        credentialsData[0][0]= getDataByKey("email_invalid"); credentialsData[0][1]= getDataByKey("password_valid"); credentialsData[0][2]= false;
-        credentialsData[1][0]= "any"+getDataByKey("email_invalid"); credentialsData[1][1]= getDataByKey("password_valid"); credentialsData[1][2]= false;
+        credentialsData[0][0]= getDataByKey("email_invalid"); credentialsData[0][1]= getDataByKey("password_valid");
+        credentialsData[1][0]= "any"+getDataByKey("email_invalid"); credentialsData[1][1]= getDataByKey("password_valid");
+        // credentialsData[2][0]= getDataByKey("email_invalid")+"\'); 123413242 --"; credentialsData[2][1]= getDataByKey("password_valid");
+        // credentialsData[3][0]= getDataByKey("email_valid"); credentialsData[3][1]= "";
+        // credentialsData[4][0]= ""; credentialsData[4][1]= getDataByKey("password_valid");
 
         return credentialsData;
     }
     @Test(dataProvider = "loginData_negative", priority = 2)
-    public void login_negative_Test(String email, String password, boolean flag) throws InterruptedException, IOException
+    public void login_negative_Test(String email, String password) throws InterruptedException, IOException
     {
         homePage = new HomePage(driver);
         loginPage = new LoginPage(driver);
-
+        
         wait = new WebDriverWait(driver, 9);
 
         if(driver.getCurrentUrl().equals("https://develop.nasnav.org/fortune"))

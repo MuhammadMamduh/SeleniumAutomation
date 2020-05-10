@@ -123,7 +123,7 @@ public class TestsBase
         return properties;
     }
 
-    public String[] openLinkInNewTab(String url)
+    public String[] openLinkInNewTab(String url) throws InterruptedException
     {
         Robot robot= null;
         try {
@@ -131,6 +131,7 @@ public class TestsBase
         } catch (AWTException e) {
             e.printStackTrace();
         }
+        Thread.sleep(3000);
         robot.keyPress(KeyEvent.VK_CONTROL);
         robot.keyPress(KeyEvent.VK_T);
 

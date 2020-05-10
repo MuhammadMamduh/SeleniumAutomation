@@ -26,7 +26,7 @@ public class LoginPage extends PagesBase
     @FindBy(css = "button.sallab-submit-button")
     public WebElement login_btn;
 
-    @FindBy(linkText = "Create an account")
+    @FindBy(css = "a.sallab-login--grid__form--column--create")
     public WebElement registrationPage_link;
     // _________________________________________________________________________________________________________________
 
@@ -48,9 +48,10 @@ public class LoginPage extends PagesBase
         click(login_btn);
     }
 
-    public RegistrationPage goToRegistrationPage()
+    public RegistrationPage goToRegistrationPage() throws InterruptedException
     {
-        click(registrationPage_link);
+        driver.navigate().to("https://develop.nasnav.org/fortune/register");
+        // click(registrationPage_link);
 
         return new RegistrationPage(driver);
     }

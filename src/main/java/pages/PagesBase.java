@@ -1,6 +1,5 @@
 package pages;
 
-
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -29,7 +28,7 @@ import java.util.Properties;
 public class PagesBase
 {
     // ________________________________________ [ Instance Variables ] _________________________________________________
-    public WebDriver driver; // TODO: Understand why this corrupted the design & caused a [NullPointerException]
+    // public WebDriver driver; // TODO: Understand why this corrupted the design & caused a [NullPointerException]
 
     protected FileInputStream fis;
     protected Properties properties;
@@ -50,6 +49,15 @@ public class PagesBase
     @FindBy(css = "div.Toastify__toast-body + button")
     public WebElement closeAlert_btn;
 
+    @FindBy(css = "button[class=\"shopping-cart icon\"]")
+    public WebElement cart_btn;
+
+    @FindBy(css = "button[class=\"shopping-cart icon\"] p.badge")
+    public WebElement noOfItemsInCart_lbl;
+
+    @FindBy(css = "div.dropCartContainer ul[class=\"cartDropdown mb-0\"]")
+    public WebElement cartItems_dropDown;
+    
     // _________________________________________________________________________________________________________________
 
 
@@ -63,11 +71,11 @@ public class PagesBase
 
     // ____________________________________________ [ Functions ] ______________________________________________________
     // Common Functions
-    public static WebElement click(WebElement button)
+    public static WebElement click(WebElement element)
     {
-        button.click();
+        element.click();
 
-        return button;
+        return element;
     }
     public WebElement hoverOnElement(WebElement element, WebDriver driver)
     {
@@ -80,6 +88,7 @@ public class PagesBase
     public static WebElement sendText(WebElement textElement , String value)
     {
         textElement.sendKeys(value);
+        System.out.println("Inputing: " + value);
 
         return textElement;
     }
@@ -103,7 +112,25 @@ public class PagesBase
     {
         jse.executeScript("scrollBy(0,2500)");
     }
-
+    public static int getRandomIndexFromZeroBasedDs(int dsSize)
+    {
+        if(dsSize==0)
+        {
+            return -1;
+        }
+        else
+        {
+            double random = Math.random()*10;
+            int roundedRandom = (int) Math.round(random);
+    
+            while(roundedRandom>=dsSize-1) // dsSize-1 = maxIndex
+            {
+                roundedRandom--;
+            }
+    
+            return roundedRandom;
+        }
+    }
 
 
 //    public CookieManager getCookieManager(){
