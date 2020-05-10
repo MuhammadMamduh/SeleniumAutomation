@@ -50,6 +50,9 @@ public class HomePage extends PagesBase
     @FindBy(css = "div.Navigation_navButtons__2syKV :nth-child(2)")
     public WebElement makeUp_navBarElement;
 
+    @FindBy(css = "div.Column_Column__2fQ1B a")
+    public List<WebElement> makeUpCategories_list;
+
     @FindBy(css = "div.Navigation_navButtons__2syKV :nth-child(4)")
     public WebElement skinCare_navBarElement;
 
@@ -88,14 +91,14 @@ public class HomePage extends PagesBase
         click(logout_btn);
     }
 
-    public SearchResultsPage search(String searchToken)
+    public ResultingProductsPage search(String searchToken)
     {
         clearText(searchBox);
         sendText(searchBox, searchToken);
         click(search_btn);
         // clickEnter();
 
-        return (new SearchResultsPage(driver));
+        return (new ResultingProductsPage(driver));
     }
 
     public void navigateMainProductsCategories(WebElement mainCategoryElement, String subCategoryElementLinkText) throws InterruptedException

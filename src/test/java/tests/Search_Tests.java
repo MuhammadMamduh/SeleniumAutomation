@@ -6,7 +6,7 @@ import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import pages.HomePage;
-import pages.SearchResultsPage;
+import pages.ResultingProductsPage;
 
 public class Search_Tests extends TestsBase
 {
@@ -37,12 +37,12 @@ public class Search_Tests extends TestsBase
         wait = new WebDriverWait(driver, 9);
         boolean resultsExist;
 
-        SearchResultsPage searchResultsPage= new SearchResultsPage(driver);
+        ResultingProductsPage resultingProductsPage = new ResultingProductsPage(driver);
 
         homePage.search(searchToken);
         try
         {
-            wait.until(ExpectedConditions.visibilityOf(searchResultsPage.resultingProductsLink_list.get(0)));
+            wait.until(ExpectedConditions.visibilityOf(resultingProductsPage.resultingProductsLink_list.get(0)));
             resultsExist = true;
         }
         catch(Exception e)

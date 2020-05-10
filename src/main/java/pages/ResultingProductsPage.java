@@ -7,7 +7,7 @@ import org.openqa.selenium.support.PageFactory;
 
 import java.util.List;
 
-public class SearchResultsPage extends PagesBase
+public class ResultingProductsPage extends PagesBase
 {
     private WebDriver driver;
 
@@ -24,7 +24,7 @@ public class SearchResultsPage extends PagesBase
     // _________________________________________________________________________________________________________________
 
     // ___________________________________________ [ Constructor ] _____________________________________________________
-    public SearchResultsPage(WebDriver driver) {
+    public ResultingProductsPage(WebDriver driver) {
         super(driver);
         this.driver = driver;
 
