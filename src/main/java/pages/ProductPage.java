@@ -1,11 +1,11 @@
 package pages;
 
-import java.util.List;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+
+import java.util.List;
 
 public class ProductPage extends PagesBase
 {
@@ -27,7 +27,7 @@ public class ProductPage extends PagesBase
     @FindBy (css = "div.filters div.dropdown")
     public WebElement size_dropDown;
 
-    @FindBy (css = "div.filters div.dropdown")
+    @FindBy (id = "quantity-main")
     public WebElement quantity_txtField;
 
     @FindBy (css = "button[class=\"btn cart\"]")
@@ -58,8 +58,13 @@ public class ProductPage extends PagesBase
 
     // ____________________________________________ [ Functions ] ______________________________________________________
     // Actions
-    public boolean addItemToCart()
+    public boolean addItemsToCart(String noOfItems)
     {
+        if(Integer.parseInt(noOfItems)>1)
+        {
+            clearText(quantity_txtField);
+            sendText(quantity_txtField, noOfItems);
+        }
         click(addToCart_btn);
 
         if(alert.getText().equals("anObject"))

@@ -1,11 +1,14 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.events.EventFiringWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -57,6 +60,10 @@ public class PagesBase
 
     @FindBy(css = "div.dropCartContainer ul[class=\"cartDropdown mb-0\"]")
     public WebElement cartItems_dropDown;
+
+    @FindBy(css = "a[class=\"cartDropdown__btn bg\"]")
+    public WebElement goToCartFromDropDown_btn;
+
     
     // _________________________________________________________________________________________________________________
 
@@ -84,6 +91,11 @@ public class PagesBase
         action.moveToElement(element).build().perform();
 
         return element;
+    }
+    public static void scrollToElement(WebDriver driver, WebElement element)
+    {
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", element);
     }
     public static WebElement sendText(WebElement textElement , String value)
     {
@@ -132,7 +144,12 @@ public class PagesBase
         }
     }
 
-
+    public static void clickElementWhenClickable(By locator, int timeout, EventFiringWebDriver driver) {
+        WebElement element = null;
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        element = wait.until(ExpectedConditions.elementToBeClickable(locator));
+        element.click();
+    }
 //    public CookieManager getCookieManager(){
 //        return new CookieManager(driver);
 //    }

@@ -31,7 +31,7 @@ public class CartPage extends PagesBase
     WebElement total_field;
 
     @FindBy( css = "button[class='btn checkout']")
-    WebElement checkout_btn;
+    public WebElement checkout_btn;
     // _________________________________________________________________________________________________________________
 
     // ___________________________________________ [ Constructor ] _____________________________________________________
